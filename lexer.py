@@ -44,14 +44,13 @@ t_EQUALS = r'='
 
 # 4) Tokens complejos: números, identificadores, strings
 def t_NUMBER(t):
-    r'\d+(\.\d+)?([eE][+-]?\d+)?' #? Desarrollar por qué esta expresión
+    r'\d+(\.\d+)?([eE][+-]?\d+)?' 
 
-    # Convertir a float o int según corresponda
     if('.' in t.value) or ('e' in t.value) or ('E' in t.value):
         try:
             t.value = float(t.value)
         except ValueError:
-            t.value = float(0.0) #? Fallback seguro?
+            t.value = float(0.0) 
     else:
         try:
             t.value = int(t.value)
@@ -62,7 +61,7 @@ def t_NUMBER(t):
 
 def t_ID(t):
     r'[A-Za-z_][A-Za-z0-9_]*'
-    t.type = reserved.get(t.value, 'ID') #? Cómo chequea esto?
+    t.type = reserved.get(t.value, 'ID') 
     return t
 
 def t_STRING(t):
@@ -84,7 +83,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count('\n')
 
 # 8) Función auxiliar para calcular la columna
-def find_column(input_text, lexpos): # ? Cómo funciona esta función
+def find_column(input_text, lexpos): 
     last_cr = input_text.rfind('\n', 0, lexpos)
     if last_cr < 0:
         return lexpos + 1
@@ -142,4 +141,5 @@ if __name__ == '__main__':
     )
 
 for tok in tokenize(sample):
+
     print(tok)
